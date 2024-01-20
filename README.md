@@ -12,17 +12,16 @@ As the name suggests, ForMZ focuses on empowering the youth by delivering compre
 
 - Centralized repository of information on government initiatives.
 - User-friendly interface for easy navigation and access to relevant content.
-- Integration of Spring Boot for efficient backend development.
-- Continuous integration and deployment using Jenkins.
-- Scalability and containerization through Docker.
-- Hosting on AWS for reliable and scalable infrastructure.
-- Efficient web serving with Nginx.
+- Integration of <b>Spring Boot</b> for efficient backend development.
+- Continuous integration and deployment using <b>Jenkins</b>.
+- Scalability and containerization through <b>Docker</b>.
+- Hosting on <b>AWS</b> for reliable and scalable infrastructure.
+- Efficient web serving with <b>Nginx</b>.
 
 ## Installation Guide
 
 To set up the ForMZ project locally, follow these steps:
 
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/ForMZ.git
+2. 추가 예정~
 
