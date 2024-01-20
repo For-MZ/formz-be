@@ -1,6 +1,6 @@
 # formz-be
 
-# ForMZ - Empowering Youth through National Support Programs
+# ForMZ - Youth Empowerment: Navigating National Support Policies and Programs for a Brighter Tomorrow
 
 ![ForMZ Logo](link_to_logo.png)
 
