@@ -18,6 +18,14 @@ As the name suggests, ForMZ focuses on empowering the youth by delivering compre
 - Hosting on <b>AWS</b> for reliable and scalable infrastructure.
 - Efficient web serving with <b>Nginx</b>.
 
+</br>
+
+## System Architecture 
+
+<img width="800px" src="https://github.com/For-MZ/formz-be/assets/102718303/2464f498-6260-4f88-a116-aeb851b671ea">
+
+</br>
+
 ## Installation Guide
 
 To set up the ForMZ project locally, follow these steps:
