@@ -2,8 +2,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
-    username: 
-    password: 
+    username:
+    password:
 
   jpa:
     hibernate:
@@ -13,3 +13,6 @@ spring:
         format_sql: true
       show_sql: true
     defer-datasource-initialization: true
+
+    profiles:
+      include: oauth

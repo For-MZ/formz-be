@@ -4,6 +4,6 @@ spring:
       client:
         registration:
           google:
-            client-id: 54767115914-gcla0mork6h3156h4qcutjerm0mdf4fu.apps.googleusercontent.com
-            client-secret: 비밀키
+            client-id: 61017715467-fol81gb1mnmkcoh3tldgi79t2pn35lvh.apps.googleusercontent.com
+            client-secret: fmzbe123!
             scope: profile,email
