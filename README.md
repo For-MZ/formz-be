@@ -31,5 +31,5 @@ As the name suggests, ForMZ focuses on empowering the youth by delivering compre
 To set up the ForMZ project locally, follow these steps:
 
 1. Clone the repository:
-2. 추가 예정~
+2. 
 
