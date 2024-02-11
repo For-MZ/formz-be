@@ -31,5 +31,19 @@ As the name suggests, ForMZ focuses on empowering the youth by delivering compre
 To set up the ForMZ project locally, follow these steps:
 
 1. Clone the repository:
-2. 추가 예정~
+2. Navigate to the project directory:<Br>
+cd your-spring-boot-project
+3. Install Java 17:<Br>
+Ensure you have Java 17 installed on your machine.<Br>
+4. Install Docker:<Br>
+Install Docker following the instructions for your operating system.<Br>
+~Docker Installation Guide~
+5. Install Jenkins:<Br>
+Set up Jenkins using Docker. Replace your-jenkins-port with the desired port.<Br>
+docker run -p your-jenkins-port:8080 -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts<Br>
+Access Jenkins in your web browser: http://localhost:your-jenkins-port<Br>
+6. Build and Run the Spring Boot Project:
+Use the following commands to build and run your Spring Boot application.<Br>
+7. Access the Application:<Br>
+Open http://localhost:your_application_port in your web browser.
 
