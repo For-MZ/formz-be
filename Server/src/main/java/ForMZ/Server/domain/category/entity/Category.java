@@ -11,7 +11,7 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
-    private Integer id;
+    private Long id;
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)

@@ -19,7 +19,7 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false)
     private String title;
@@ -28,7 +28,7 @@ public class Post {
     private String content;
 
     @Column
-    private Integer view;
+    private int view;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
