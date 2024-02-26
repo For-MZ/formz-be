@@ -1,4 +1,4 @@
-package ForMZ.Server.domain.post.entity;
+package ForMZ.Server.domain.post.Entity;
 
 import ForMZ.Server.domain.category.entity.Category;
 import ForMZ.Server.domain.comment.entity.Comment;
@@ -40,6 +40,6 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<PostLike> postLikes = new ArrayList<>();
 
-    @OneToOne(mappedBy ="post", fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     private Category category;
 }
