@@ -1,4 +1,4 @@
-package ForMZ.Server.domain.like.postLike.entity;
+package ForMZ.Server.domain.postLike.entity;
 
 import ForMZ.Server.domain.post.entity.Post;
 import ForMZ.Server.domain.user.entity.User;
