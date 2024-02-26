@@ -1,4 +1,4 @@
-package ForMZ.Server.domain.post.Entity;
+package ForMZ.Server.domain.post.entity;
 
 import ForMZ.Server.domain.category.entity.Category;
 import ForMZ.Server.domain.comment.entity.Comment;
