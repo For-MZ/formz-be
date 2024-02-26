@@ -1,6 +1,6 @@
 package ForMZ.Server.domain.comment.entity;
 
-import ForMZ.Server.domain.post.Entity.Post;
+import ForMZ.Server.domain.post.entity.Post;
 import ForMZ.Server.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
