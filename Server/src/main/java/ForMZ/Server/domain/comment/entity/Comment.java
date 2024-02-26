@@ -1,6 +1,5 @@
 package ForMZ.Server.domain.comment.entity;
 
-import ForMZ.Server.domain.post.entity.Post;
 import ForMZ.Server.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -23,9 +22,9 @@ public class Comment {
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "POST_ID")
-    private Post post;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "POST_ID")
+//    private Post post;
 
     //@OneToMany(mappedBy = "comment", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     //private List<Comment> commentChild = new ArrayList<>();
