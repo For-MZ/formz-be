@@ -13,13 +13,13 @@ public class File extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "file_id")
     private Long id;
-    @Column
+    @Column(nullable = false)
     private String fileUrl;
-    @Column
+    @Column(nullable = false)
     private String fileOriginName;
 
-    //    @Column
-    //    private String key;  //  key는 예약어 변경 필요
+    @Column(nullable = false)
+    private String fileKey;  // s3 파일 저장시 발급되는 고유 키
     @Column
     private String fileSize;
 }

@@ -25,10 +25,13 @@ public class User extends BaseEntity {
 
     @Column
     private String nickName;
+
+    @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
     private Role role;
 
-    @Column
+    @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
     private SignType signType;
 
     public enum Role{

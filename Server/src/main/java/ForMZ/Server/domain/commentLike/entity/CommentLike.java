@@ -17,10 +17,10 @@ public class CommentLike {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "COMMENT_ID")
+    @JoinColumn(name = "COMMENT_ID", nullable = false)
     private Comment comment;
 }
