@@ -2,6 +2,7 @@ package ForMZ.Server.domain.post.entity;
 
 import ForMZ.Server.domain.category.entity.Category;
 import ForMZ.Server.domain.user.entity.User;
+import ForMZ.Server.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Post {
+public class Post extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

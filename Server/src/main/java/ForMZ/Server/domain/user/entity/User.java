@@ -1,5 +1,6 @@
 package ForMZ.Server.domain.user.entity;
 
+import ForMZ.Server.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
@@ -8,7 +9,7 @@ import lombok.*;
 @Entity
 @Getter
 @NoArgsConstructor
-public class User {
+public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
