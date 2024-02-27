@@ -13,9 +13,9 @@ public class File extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "file_id")
     private Long id;
-    @Column
+    @Column(nullable = false)
     private String fileUrl;
-    @Column
+    @Column(nullable = false)
     private String fileOriginName;
     @Column
     private String key;

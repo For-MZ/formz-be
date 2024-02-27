@@ -24,17 +24,21 @@ public class User extends BaseEntity {
     private String password;
 
     @Column
-    private String name;
-
-    @Enumerated(value = EnumType.STRING)
+    private String nickName;
     @Column(nullable = false)
-    private Gender gender;
+    private Role role;
 
     @Column
-    private String birthDate;
+    private SignType signType;
 
-    public enum Gender{
-        MALE,
-        FEMALE
+    public enum Role{
+        USER,
+        ADMIN
+    }
+
+    public enum SignType{
+        USUAL,
+        GOOGLE,
+        KAKAO
     }
 }
