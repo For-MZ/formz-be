@@ -27,9 +27,9 @@ public class Comment extends BaseEntity {
 //    @JoinColumn(name = "POST_ID")
 //    private Post post;
 
-    //@OneToMany(mappedBy = "comment", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
-    //private List<Comment> commentChild = new ArrayList<>();
+//    @OneToMany(mappedBy = "comment", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+//    private List<Comment> commentChild = new ArrayList<>();
 
-    //@OneToMany(mappedBy = "comment", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
-    //private List<CommentLike> commentLikes = new ArrayList<>();
+//    @OneToMany(mappedBy = "comment", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+//    private List<CommentLike> commentLikes = new ArrayList<>();
 }
