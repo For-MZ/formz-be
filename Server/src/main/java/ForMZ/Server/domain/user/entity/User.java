@@ -40,7 +40,7 @@ public class User extends BaseEntity {
     }
 
     public enum SignType{
-        USUAL,
+        NORMAL,
         GOOGLE,
         KAKAO
     }
