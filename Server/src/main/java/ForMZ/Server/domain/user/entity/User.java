@@ -1,5 +1,6 @@
 package ForMZ.Server.domain.user.entity;
 
+import ForMZ.Server.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
@@ -8,7 +9,7 @@ import lombok.*;
 @Entity
 @Getter
 @NoArgsConstructor
-public class User {
+public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -23,17 +24,24 @@ public class User {
     private String password;
 
     @Column
-    private String name;
+    private String nickName;
 
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
-    private Gender gender;
+    private Role role;
 
-    @Column
-    private String birthDate;
+    @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
+    private SignType signType;
 
-    public enum Gender{
-        MALE,
-        FEMALE
+    public enum Role{
+        USER,
+        ADMIN
+    }
+
+    public enum SignType{
+        NORMAL,
+        GOOGLE,
+        KAKAO
     }
 }

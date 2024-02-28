@@ -1,7 +1,7 @@
-package ForMZ.Server.domain.alarm.entity;
+package ForMZ.Server.domain.commentLike.entity;
 
+import ForMZ.Server.domain.comment.entity.Comment;
 import ForMZ.Server.domain.user.entity.User;
-import ForMZ.Server.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,19 +9,18 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Alarm extends BaseEntity {
+public class CommentLike {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "alarm_id")
+    @Column(name = "commentLike_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
-    @Column
-    private String title;
-
-    @Column
-    private String content;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "COMMENT_ID", nullable = false)
+    private Comment comment;
 }
