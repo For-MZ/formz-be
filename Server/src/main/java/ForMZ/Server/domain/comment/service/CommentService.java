@@ -1,4 +1,7 @@
 package ForMZ.Server.domain.comment.service;
 
-public class CommentService {
+import ForMZ.Server.domain.comment.dto.CommentReq;
+
+public interface CommentService {
+    void createComment(CommentReq commentReq);
 }
