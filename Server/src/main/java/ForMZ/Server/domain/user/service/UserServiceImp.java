@@ -1,6 +1,7 @@
 package ForMZ.Server.domain.user.service;
 
 import ForMZ.Server.domain.user.entity.User;
+import ForMZ.Server.domain.user.exception.UserNotFoundException;
 import ForMZ.Server.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ public class UserServiceImp implements UserService {
     @Override
     public User getUser(Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow();
+                .orElseThrow(UserNotFoundException::new);
         return user;
     }
   
