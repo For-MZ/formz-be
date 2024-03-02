@@ -48,6 +48,8 @@ public class Comment extends BaseEntity {
     //연관관계 설정
     private void setUserAndPost(User user, Post post) {
         this.user = user;
+        user.getComments().add(this);
         this.post = post;
+        post.getComments().add(this);
     }
 }
