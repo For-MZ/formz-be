@@ -1,11 +1,7 @@
 package ForMZ.Server.domain.user.service;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import ForMZ.Server.domain.user.entity.User;
 
-@Service
-@RequiredArgsConstructor
-public class UserService {
-    //private final UserRepository userRepository;
-  
+public interface UserService {
+    User getUser(Long userId);
 }
