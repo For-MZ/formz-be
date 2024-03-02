@@ -2,10 +2,10 @@ package ForMZ.Server.domain.comment.dto;
 
 
 import jakarta.validation.Valid;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Getter
+@Data
 @NoArgsConstructor
 public class CommentReq {
     Long postId;
