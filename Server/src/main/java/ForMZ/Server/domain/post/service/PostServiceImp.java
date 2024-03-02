@@ -1,11 +1,10 @@
 package ForMZ.Server.domain.post.service;
 
 import ForMZ.Server.domain.post.entity.Post;
+import ForMZ.Server.domain.post.exception.PostNotFoundException;
 import ForMZ.Server.domain.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,7 +14,7 @@ public class PostServiceImp implements PostService {
     @Override
     public Post getPost(Long postId) {
         Post post =  postRepository.findById(postId)
-                .orElseThrow();
+                .orElseThrow(PostNotFoundException::new);
         return post;
     }
 }
