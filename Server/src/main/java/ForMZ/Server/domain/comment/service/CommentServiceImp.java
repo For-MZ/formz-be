@@ -1,8 +1,6 @@
 package ForMZ.Server.domain.comment.service;
 
-import ForMZ.Server.domain.comment.dto.AllCommentRes;
-import ForMZ.Server.domain.comment.dto.CommentReq;
-import ForMZ.Server.domain.comment.dto.CommentRes;
+import ForMZ.Server.domain.comment.dto.*;
 import ForMZ.Server.domain.comment.dto.child.ChildCommentRes;
 import ForMZ.Server.domain.comment.entity.Comment;
 import ForMZ.Server.domain.comment.mapper.CommentMapper;
@@ -85,5 +83,20 @@ public class CommentServiceImp implements CommentService{
                     return CommentMapper.INSTANCE.toChildCommentRes(cmtLiked, cmtLikeCnt, c);
                 }).toList();
         return childCmts;
+    }
+
+    /**
+     * 댓글 수정
+     */
+    @Override
+    public CommentUpdateRes updateComment(Long commentId, CommentUpdateReq cmtUpdateReq) {
+        //TODO : 본인 댓글인지 확인해야함
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow();
+
+       final String content = cmtUpdateReq.getContent();
+       comment.updateComment(content);
+
+        return new CommentUpdateRes(comment.getContent());
     }
 }
