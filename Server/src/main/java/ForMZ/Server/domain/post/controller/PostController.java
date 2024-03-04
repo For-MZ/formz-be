@@ -7,6 +7,7 @@ import ForMZ.Server.domain.post.mapper.PostMapper;
 import ForMZ.Server.domain.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -60,11 +61,11 @@ public class PostController {
      */
     @GetMapping("/posts")
     public ResponseEntity getPostList(@RequestParam(name = "page", defaultValue = "1", required = false) int page,
-                                      @RequestParam(name = "pageSize", defaultValue = "10", required = false) int pageSize,
+                                      @RequestParam(name = "pageSize", defaultValue = "10", required = false) int size,
                                       @RequestParam(name = "category", required = false) String category){
         String sortParam = "";  // TODO: 정렬 기준 파라미터 "sortParam"
-        List<Post> postList = postService.getPosts(sortParam);
-        List<PostRes> postResList = mapper.postListToPostResList(postList);
+        Page<Post> postList = postService.getPosts(sortParam, page-1, size);
+        List<PostRes> postResList = mapper.postListToPostResList(postList.getContent());
         return new ResponseEntity(postResList, HttpStatus.OK);
     }
 }

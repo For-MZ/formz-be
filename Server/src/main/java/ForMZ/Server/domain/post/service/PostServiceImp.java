@@ -7,6 +7,9 @@ import ForMZ.Server.domain.post.repository.PostRepository;
 import ForMZ.Server.global.entity.BaseEntity;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -59,9 +62,10 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
-    public List<Post> getPosts(String sortParam){   // sortParam : 정렬 기준
+    public Page<Post> getPosts(String sortParam, int page, int size){   // sortParam : 정렬 기준
         // TODO: sortParam에 맞는 정렬 작업
-        return postRepository.findAll();
+        return postRepository.findAll(PageRequest.of(page, size,
+                Sort.by("createdDate").descending()));
     }
 
     /**
