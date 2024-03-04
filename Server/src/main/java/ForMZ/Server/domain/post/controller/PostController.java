@@ -30,7 +30,7 @@ public class PostController {
      */
     @PostMapping("/posts")
     public ResponseEntity createPost(@RequestBody PostReq postReq){
-        Post post = postService.createPost(postReq);
+        Post post = postService.createPost(mapper.postReqToPost(postReq));
         PostRes response = mapper.postToPostRes(post);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
@@ -41,7 +41,7 @@ public class PostController {
     @PatchMapping("/posts/{post-id}")
     public ResponseEntity updatePost(@RequestBody PostReq postReq,
                                      @PathVariable("post-id") Long postId){
-        Post post = postService.updatePost(postReq, postId);
+        Post post = postService.updatePost(mapper.postReqToPost(postReq), postId);
         PostRes response = mapper.postToPostRes(post);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

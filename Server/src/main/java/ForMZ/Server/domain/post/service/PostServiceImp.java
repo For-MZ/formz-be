@@ -5,6 +5,7 @@ import ForMZ.Server.domain.post.entity.Post;
 import ForMZ.Server.domain.post.mapper.PostMapper;
 import ForMZ.Server.domain.post.repository.PostRepository;
 import ForMZ.Server.global.entity.BaseEntity;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,19 +18,18 @@ import java.util.function.Supplier;
 @RequiredArgsConstructor
 public class PostServiceImp implements PostService {
 
-    private final PostMapper mapper;
     private final PostRepository postRepository;
 
     @Override
-    public Post createPost(PostReq postReq){
-        Post post = mapper.postReqToPost(postReq);
+    @Transactional
+    public Post createPost(Post post){
         return postRepository.save(post);
     }
 
     @Override
     public Post getPost(Long postId) {
         Post post =  postRepository.findById(postId)
-                .orElseThrow();     //TODO: POST_NOT_FOUND exception
+                .orElseThrow();     //TODO: NOT_FOUND_POST exception
         /**
          * isDeleted를 따로 만들지 말고 getPost 내부로 옮길지
          */
@@ -38,11 +38,11 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
-    public Post updatePost(PostReq postReq, Long postId){
+    @Transactional
+    public Post updatePost(Post modPost, Long postId){
         Post post = getPost(postId);
         verifyPostAuthority(post);
 
-        Post modPost = mapper.postReqToPost(postReq);
         editField(modPost::getCategory, post::setCategory);
         editField(modPost::getTitle, post::setTitle);
         editField(modPost::getContent, post::setContent);
@@ -51,6 +51,7 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
+    @Transactional
     public void deletePost(Long postId){
         Post post = getPost(postId);
         verifyPostAuthority(post);

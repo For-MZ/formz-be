@@ -6,9 +6,9 @@ import ForMZ.Server.domain.post.entity.Post;
 import java.util.List;
 
 public interface PostService {
-    Post createPost(PostReq postReq);
+    Post createPost(Post post);
     Post getPost(Long postId);
-    Post updatePost(PostReq postReq, Long postId);
+    Post updatePost(Post post, Long postId);
     void deletePost(Long postId);
     List<Post> getPosts(String sortParam);
 }
