@@ -24,7 +24,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class CommentServiceImp implements CommentService{
+public class CommentServiceImpl implements CommentService{
 
     private final UserService userService;
     private final PostService postService;

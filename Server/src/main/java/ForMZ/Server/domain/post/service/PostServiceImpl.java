@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class PostServiceImp implements PostService {
+public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
     @Override
