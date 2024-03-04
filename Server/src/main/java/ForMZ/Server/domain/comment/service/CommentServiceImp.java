@@ -1,16 +1,27 @@
 package ForMZ.Server.domain.comment.service;
 
+import ForMZ.Server.domain.comment.dto.AllCommentRes;
 import ForMZ.Server.domain.comment.dto.CommentReq;
+import ForMZ.Server.domain.comment.dto.CommentRes;
+import ForMZ.Server.domain.comment.dto.child.ChildCommentRes;
 import ForMZ.Server.domain.comment.entity.Comment;
+import ForMZ.Server.domain.comment.mapper.CommentMapper;
+import ForMZ.Server.domain.comment.repository.CommentRepository;
+import ForMZ.Server.domain.commentLike.entity.CommentLike;
+import ForMZ.Server.domain.commentLike.repository.CommentLikeRepository;
 import ForMZ.Server.domain.post.entity.Post;
 import ForMZ.Server.domain.post.service.PostService;
 import ForMZ.Server.domain.user.entity.User;
 import ForMZ.Server.domain.user.service.UserService;
-import ForMZ.Server.domain.user.service.UserServiceImp;
-import ForMZ.Server.global.common.ResponseDto;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +30,8 @@ public class CommentServiceImp implements CommentService{
 
     private final UserService userService;
     private final PostService postService;
+    private final CommentLikeRepository commentLikeRepository;
+    private final CommentRepository commentRepository;
 
     /**
      * 댓글 작성
@@ -30,5 +43,47 @@ public class CommentServiceImp implements CommentService{
 
         final String content = commentReq.getComment();
         Comment newComment = new Comment(content, user, post);
+    }
+
+    /**
+     * 댓글 조회
+     */
+    @Override
+    public AllCommentRes getComment(Long postId) {
+        Post post = postService.getPost(postId);
+        //작성한 댓글 리스트
+        List<CommentRes> comments = post.getComments().stream()
+                .map(comment -> {
+                    boolean cmtLiked = false;
+                    Optional<CommentLike> commentLike = commentLikeRepository.findCommentLikeByUserAndComment(comment.getUser(), comment);
+                    if (commentLike.isPresent()) {
+                        cmtLiked = true;
+                    }
+                    int cmtLikeCnt = comment.getCommentLikes().size();
+                    //대댓글 리스트
+                    List<ChildCommentRes> childCmts = getFiveChildComments(comment);
+                    return CommentMapper.INSTANCE.toCommentRes(cmtLiked, cmtLikeCnt, childCmts, comment);
+                }).toList();
+
+        return new AllCommentRes(comments);
+    }
+
+    /**
+     * 대댓글 상위 5개 가져오기
+     */
+    private List<ChildCommentRes> getFiveChildComments(Comment parentCmt) {
+        PageRequest pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC));
+        List<Comment> childComments = commentRepository.findTop5(pageable);
+        List<ChildCommentRes> childCmts = childComments.stream()
+                .map(c -> {
+                    boolean cmtLiked = false;
+                    Optional<CommentLike> commentLike = commentLikeRepository.findCommentLikeByUserAndComment(c.getUser(), c);
+                    if (commentLike.isPresent()) {
+                        cmtLiked = true;
+                    }
+                    int cmtLikeCnt = c.getCommentLikes().size();
+                    return CommentMapper.INSTANCE.toChildCommentRes(cmtLiked, cmtLikeCnt, c);
+                }).toList();
+        return childCmts;
     }
 }
