@@ -3,6 +3,7 @@ package ForMZ.Server.domain.comment.service;
 import ForMZ.Server.domain.comment.dto.*;
 import ForMZ.Server.domain.comment.dto.child.ChildCommentRes;
 import ForMZ.Server.domain.comment.entity.Comment;
+import ForMZ.Server.domain.comment.exception.CommentNotFoundException;
 import ForMZ.Server.domain.comment.mapper.CommentMapper;
 import ForMZ.Server.domain.comment.repository.CommentRepository;
 import ForMZ.Server.domain.commentLike.entity.CommentLike;
@@ -92,7 +93,7 @@ public class CommentServiceImp implements CommentService{
     public CommentUpdateRes updateComment(Long commentId, CommentUpdateReq cmtUpdateReq) {
         //TODO : 본인 댓글인지 확인해야함
         Comment comment = commentRepository.findById(commentId)
-                .orElseThrow();
+                .orElseThrow(CommentNotFoundException::new);
 
        final String content = cmtUpdateReq.getContent();
        comment.updateComment(content);
