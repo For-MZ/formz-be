@@ -1,6 +1,7 @@
 package ForMZ.Server.domain.post.entity;
 
 import ForMZ.Server.domain.category.entity.Category;
+import ForMZ.Server.domain.category.entity.CategoryCode;
 import ForMZ.Server.domain.comment.entity.Comment;
 import ForMZ.Server.domain.postLike.entity.PostLike;
 import ForMZ.Server.domain.user.entity.User;

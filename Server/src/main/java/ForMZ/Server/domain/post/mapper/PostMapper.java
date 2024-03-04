@@ -11,6 +11,7 @@ import java.util.List;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface PostMapper {
+    @Mapping(source = "postReq.category", target = "category.categoryCode")
     Post postReqToPost(PostReq postReq);
 
     @Mapping(source = "post.id", target = "postId")
