@@ -7,10 +7,13 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 
+import java.util.List;
+
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface PostMapper {
     Post postReqToPost(PostReq postReq);
 
     @Mapping(source = "post.id", target = "postId")
     PostRes postToPostRes(Post post);
+    List<PostRes> postListToPostResList(List<Post> posts);
 }
