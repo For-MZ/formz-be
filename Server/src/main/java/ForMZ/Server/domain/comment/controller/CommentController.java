@@ -45,4 +45,13 @@ public class CommentController {
         CommentUpdateRes commentUpdateRes = commentService.updateComment(commentId, cmtUpdateReq);
         return ResponseEntity.ok(ResponseDto.create("C002", UPDATE_SUCCESS.getMessage(), commentUpdateRes));
     }
+
+    /**
+     * 댓글 삭제
+     */
+    @DeleteMapping("/comments/{commentId}")
+    public ResponseEntity<ResponseDto<?>> deleteComments(@PathVariable(name = "commentId") Long commentId) {
+        commentService.deleteComment(commentId);
+        return ResponseEntity.ok(ResponseDto.create("C003", DELETE_SUCCESS.getMessage()));
+    }
 }

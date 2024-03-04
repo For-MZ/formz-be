@@ -1,7 +1,6 @@
 package ForMZ.Server.domain.comment.service;
 
 import ForMZ.Server.domain.comment.dto.*;
-import ForMZ.Server.domain.comment.entity.Comment;
 
 public interface CommentService {
     void createComment(CommentReq commentReq);
@@ -9,4 +8,6 @@ public interface CommentService {
     AllCommentRes getComment(Long postId);
 
     CommentUpdateRes updateComment(Long commentId, CommentUpdateReq cmtUpdateReq);
+
+    void deleteComment(Long commentId);
 }

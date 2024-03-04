@@ -18,7 +18,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -99,5 +98,16 @@ public class CommentServiceImp implements CommentService{
        comment.updateComment(content);
 
         return new CommentUpdateRes(comment.getContent());
+    }
+
+    /**
+     * 댓글 삭제
+     */
+    @Override
+    public void deleteComment(Long commentId) {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(CommentNotFoundException::new);
+
+        commentRepository.delete(comment);
     }
 }
