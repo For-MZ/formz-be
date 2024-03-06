@@ -1,5 +1,6 @@
 package ForMZ.Server.domain.comment.entity;
 
+
 import ForMZ.Server.domain.comment.dto.CommentReq;
 import ForMZ.Server.domain.commentLike.entity.CommentLike;
 import ForMZ.Server.domain.post.entity.Post;
