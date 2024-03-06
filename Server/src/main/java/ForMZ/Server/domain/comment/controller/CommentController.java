@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import static ForMZ.Server.domain.comment.constant.CommentConstant.CResponseMessage.*;
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,7 +26,7 @@ public class CommentController {
     @PostMapping("/comments")
     public ResponseEntity<ResponseDto<?>> createComment(@RequestBody CommentReq commentReq) {
         commentService.createComment(commentReq);
-        return ResponseEntity.ok(ResponseDto.create("C001", CREATE_SUCCESS.getMessage()));
+        return ResponseEntity.ok(ResponseDto.create(CREATED.value(), CREATE_SUCCESS.getMessage()));
     }
 
     /**
@@ -34,7 +35,7 @@ public class CommentController {
     @GetMapping("/comments/all/{postId}")
     public ResponseEntity<ResponseDto<AllCommentRes>> getComments(@PathVariable(name = "postId") Long postId) {
         AllCommentRes comments = commentService.getComment(postId);
-        return ResponseEntity.ok(ResponseDto.create("C001", GET_SUCCESS.getMessage(), comments));
+        return ResponseEntity.ok(ResponseDto.create(OK.value(), GET_SUCCESS.getMessage(), comments));
     }
 
     /**
@@ -43,7 +44,7 @@ public class CommentController {
     @PutMapping("/commments/{commentId}")
     public ResponseEntity<ResponseDto<CommentUpdateRes>> updateComments(@PathVariable(name = "commentId") Long commentId, @RequestBody @Valid CommentUpdateReq cmtUpdateReq) {
         CommentUpdateRes commentUpdateRes = commentService.updateComment(commentId, cmtUpdateReq);
-        return ResponseEntity.ok(ResponseDto.create("C002", UPDATE_SUCCESS.getMessage(), commentUpdateRes));
+        return ResponseEntity.ok(ResponseDto.create(OK.value(), UPDATE_SUCCESS.getMessage(), commentUpdateRes));
     }
 
     /**
@@ -52,6 +53,6 @@ public class CommentController {
     @DeleteMapping("/comments/{commentId}")
     public ResponseEntity<ResponseDto<?>> deleteComments(@PathVariable(name = "commentId") Long commentId) {
         commentService.deleteComment(commentId);
-        return ResponseEntity.ok(ResponseDto.create("C003", DELETE_SUCCESS.getMessage()));
+        return ResponseEntity.ok(ResponseDto.create(OK.value(), DELETE_SUCCESS.getMessage()));
     }
 }
