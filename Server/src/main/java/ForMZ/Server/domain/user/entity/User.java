@@ -1,10 +1,14 @@
 package ForMZ.Server.domain.user.entity;
 
+import ForMZ.Server.domain.comment.entity.Comment;
 import ForMZ.Server.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -33,6 +37,9 @@ public class User extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
     private SignType signType;
+
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    private List<Comment> comments = new ArrayList<>();
 
     public enum Role{
         USER,

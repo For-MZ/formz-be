@@ -30,4 +30,9 @@ public abstract class BaseEntity {
         ACT,    // 활성화
         DEL     // 삭제, 비활성화
     }
+
+    //상태 변경
+    public void changeState(ObjectState state) {
+        this.objectState = state;
+    }
 }
