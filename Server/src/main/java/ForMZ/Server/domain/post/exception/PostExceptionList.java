@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 @Getter
 @RequiredArgsConstructor
 public enum PostExceptionList {
-    POST_NOT_FOUND("E001", HttpStatus.NOT_FOUND, "존재하지 않는 게시물입니다.");
+    POST_NOT_FOUND("PO01", HttpStatus.NOT_FOUND, "존재하지 않는 게시물입니다.");
 
     private final String statusCode;
     private final HttpStatus httpStatus;
