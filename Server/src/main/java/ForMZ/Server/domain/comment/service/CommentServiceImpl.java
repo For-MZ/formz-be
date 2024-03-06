@@ -21,6 +21,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static ForMZ.Server.global.entity.BaseEntity.ObjectState.ACT;
+import static ForMZ.Server.global.entity.BaseEntity.ObjectState.DEL;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -41,6 +44,7 @@ public class CommentServiceImpl implements CommentService{
 
         final String content = commentReq.getComment();
         Comment newComment = new Comment(content, user, post);
+        newComment.changeState(ACT);
     }
 
     /**
@@ -108,6 +112,6 @@ public class CommentServiceImpl implements CommentService{
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(CommentNotFoundException::new);
 
-        commentRepository.delete(comment);
+        comment.changeState(DEL);
     }
 }
