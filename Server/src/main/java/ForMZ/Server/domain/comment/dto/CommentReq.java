@@ -1,14 +1,18 @@
 package ForMZ.Server.domain.comment.dto;
 
+
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class CommentUpdateReq {
+public class CommentReq {
+    Long postId;
 
-    @NotBlank
-    private String content;
+    Long userId;
+
+    @Valid()
+    String comment;
+
 }
