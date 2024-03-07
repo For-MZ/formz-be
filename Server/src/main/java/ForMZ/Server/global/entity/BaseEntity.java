@@ -12,7 +12,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
 @NoArgsConstructor
 @MappedSuperclass // 아래 필드를 컬럼으로 인식하게 함
 public abstract class BaseEntity {
