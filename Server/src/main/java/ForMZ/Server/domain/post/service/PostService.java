@@ -12,6 +12,6 @@ public interface PostService {
     Post getPost(Long postId);
     Post updatePost(Post post, Long postId);
     void deletePost(Long postId);
-    Page<Post> getPosts(String sortParam, int page, int size);
+    Page<Post> getPosts(String sortParam, String category, int page, int size);
     PostRes convertPostRes(Post post);
 }

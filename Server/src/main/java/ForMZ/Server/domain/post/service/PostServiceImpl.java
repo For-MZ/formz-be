@@ -4,6 +4,7 @@ import ForMZ.Server.domain.bookmark.entity.Bookmark;
 import ForMZ.Server.domain.bookmark.repository.BookmarkRepository;
 import ForMZ.Server.domain.post.dto.PostRes;
 import ForMZ.Server.domain.post.entity.Post;
+import ForMZ.Server.domain.post.exception.InvalidSortParamException;
 import ForMZ.Server.domain.post.exception.PostNotFoundException;
 import ForMZ.Server.domain.post.exception.UnauthorizedPostAccessException;
 import ForMZ.Server.domain.post.mapper.PostMapper;
@@ -88,10 +89,19 @@ public class PostServiceImpl implements PostService {
      *  모든 POST 조회
      */
     @Override
-    public Page<Post> getPosts(String sortParam, int page, int size){   // sortParam : 정렬 기준
-        // TODO: sortParam에 맞는 정렬 작업
-        return postRepository.findAll(PageRequest.of(page, size,
-                Sort.by("createdDate").descending()));
+    public Page<Post> getPosts(String sortParam, String category, int page, int size){
+        // TODO : 카테고리 필터링
+        switch (sortParam){
+            case "createdDate" :
+                return postRepository.findAll(PageRequest.of(page, size,
+                        Sort.by("createdDate").descending()));
+            case "likeCnt":     // TODO : 좋아요수 기준 정렬
+            case "view":
+                return postRepository.findAll(PageRequest.of(page, size,
+                        Sort.by("view").descending()));
+            case "commentCnt":  // TODO : 댓글수 기준 정렬
+        }
+        throw new InvalidSortParamException();
     }
 
     /**
@@ -100,11 +110,13 @@ public class PostServiceImpl implements PostService {
     public PostRes convertPostRes(Post post){
         Long userId = 0L;   // TODO: 리프레시 토큰에서 현재 사용자 id 가져오는 메서드
         User user = userService.getUser(userId);
+
         boolean bookmarked = checkUsersBookmarkedPost(post, user);
         boolean liked = checkUsersPostLike(post, user);
         /**
-         *  TODO: 북마크와 좋아요 확인 User.postLike, User.bookmark 에서 찾는게 나은지, 각각의 Repository에서 찾는게 나은지
+         *  REFACTORING CONSIDER : 북마크와 좋아요 확인 User.postLike, User.bookmark 에서 찾는게 나은지, 각각의 Repository에서 찾는게 나은지
          */
+
         int likeCnt = post.getPostLikes().size();
         return mapper.postToPostRes(post, bookmarked, liked, likeCnt);
     }
