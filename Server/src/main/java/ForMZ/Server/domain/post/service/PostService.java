@@ -1,6 +1,7 @@
 package ForMZ.Server.domain.post.service;
 
 import ForMZ.Server.domain.post.dto.PostReq;
+import ForMZ.Server.domain.post.dto.PostRes;
 import ForMZ.Server.domain.post.entity.Post;
 import org.springframework.data.domain.Page;
 
@@ -12,4 +13,5 @@ public interface PostService {
     Post updatePost(Post post, Long postId);
     void deletePost(Long postId);
     Page<Post> getPosts(String sortParam, int page, int size);
+    PostRes convertPostRes(Post post);
 }
