@@ -1,6 +1,10 @@
 package ForMZ.Server.domain.user.entity;
 
+import ForMZ.Server.domain.bookmark.entity.Bookmark;
 import ForMZ.Server.domain.comment.entity.Comment;
+import ForMZ.Server.domain.commentLike.entity.CommentLike;
+import ForMZ.Server.domain.post.entity.Post;
+import ForMZ.Server.domain.postLike.entity.PostLike;
 import ForMZ.Server.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
@@ -40,6 +44,18 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    private List<Post> posts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    private List<Bookmark> bookmarks = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    private List<CommentLike> commentLikes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    private List<PostLike> postLikes = new ArrayList<>();
 
     public enum Role{
         USER,
