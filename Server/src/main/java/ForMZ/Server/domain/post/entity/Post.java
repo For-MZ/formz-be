@@ -1,5 +1,6 @@
 package ForMZ.Server.domain.post.entity;
 
+import ForMZ.Server.domain.bookmark.entity.Bookmark;
 import ForMZ.Server.domain.category.entity.Category;
 import ForMZ.Server.domain.category.entity.CategoryCode;
 import ForMZ.Server.domain.comment.entity.Comment;
@@ -49,6 +50,16 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "post", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<PostLike> postLikes = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "post", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    private List<Bookmark> bookmarks = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
+
+    /**
+     *  조회수 증가
+     */
+    public void beWatched(){
+        this.view++;
+    }
 }
