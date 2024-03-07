@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
-    List<Comment> findTop5(Pageable pageable);
+//    List<Comment> findTop5(Pageable pageable);    // 에러 발생
 }

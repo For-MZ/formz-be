@@ -75,7 +75,7 @@ public class CommentServiceImpl implements CommentService{
      */
     private List<ChildCommentRes> getFiveChildComments(Comment parentCmt) {
         PageRequest pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC));
-        List<Comment> childComments = commentRepository.findTop5(pageable);
+        List<Comment> childComments = commentRepository.findAll(pageable).getContent(); // repository 에러 발생 후 수정되었음
         List<ChildCommentRes> childCmts = childComments.stream()
                 .map(c -> {
                     boolean cmtLiked = false;
