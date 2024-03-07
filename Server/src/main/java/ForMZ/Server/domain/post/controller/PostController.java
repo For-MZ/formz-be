@@ -36,8 +36,8 @@ public class PostController {
     @PostMapping("/posts")
     public ResponseEntity createPost(@RequestBody PostReq postReq){
         Post post = postService.createPost(mapper.postReqToPost(postReq));
-        PostRes response = postService.convertPostRes(post);
-        return new ResponseEntity(ResponseDto.create(201, CREATE_POST_SUCCESS.getMessage(), response), HttpStatus.CREATED);
+        PostRes res = postService.convertPostRes(post);
+        return new ResponseEntity(ResponseDto.create(201, CREATE_POST_SUCCESS.getMessage(), res), HttpStatus.CREATED);
     }
 
     /**
@@ -47,8 +47,8 @@ public class PostController {
     public ResponseEntity updatePost(@RequestBody PostReq postReq,
                                      @PathVariable("postId") Long postId){
         Post post = postService.updatePost(mapper.postReqToPost(postReq), postId);
-        PostRes response = postService.convertPostRes(post);
-        return new ResponseEntity(ResponseDto.create(200, UPDATE_POST_SUCCESS.getMessage(), response), HttpStatus.OK);
+        PostRes res = postService.convertPostRes(post);
+        return new ResponseEntity(ResponseDto.create(200, UPDATE_POST_SUCCESS.getMessage(), res), HttpStatus.OK);
     }
 
     /**
@@ -66,18 +66,20 @@ public class PostController {
     @GetMapping("/posts")
     public ResponseEntity checkPostList(@RequestParam(name = "page", defaultValue = "1", required = false) int page,
                                       @RequestParam(name = "pageSize", defaultValue = "10", required = false) int size,
-                                      @RequestParam(name = "category", required = false) String category){
-        String sortParam = "";  // TODO: 정렬 기준 파라미터 "sortParam"
-        Page<Post> postList = postService.getPosts(sortParam, page-1, size);
+                                      @RequestParam(name = "category", required = false) String category,
+                                        @RequestParam(name = "sortParam", defaultValue = "createdDate", required = false) String sortParam){
+        Page<Post> postList = postService.getPosts(sortParam, category, page-1, size);
         List<PostRes> postResList = mapper.postListToPostResList(postList.getContent());
         return new ResponseEntity(ResponseDto.create(200, GET_POSTS_SUCCESS.getMessage(), postResList), HttpStatus.OK);
     }
 
-//    /**
-//     *  TODO : 특정 게시글 개별 조회
-//     */
-//    @GetMapping("/posts/{postId}")
-//    public ResponseEntity checkPost(@PathVariable("postId") Long postId){
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
+    /**
+     *  특정 게시글 개별 조회
+     */
+    @GetMapping("/posts/{postId}")
+    public ResponseEntity checkPost(@PathVariable("postId") Long postId){
+        Post post = postService.getPost(postId);
+        PostRes res = postService.convertPostRes(post);
+        return new ResponseEntity(ResponseDto.create(200, GET_POST_SUCCESS.getMessage(), res),HttpStatus.OK);
+    }
 }
