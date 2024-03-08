@@ -67,9 +67,10 @@ public class PostServiceImpl implements PostService {
         Post post = getPost(postId);
         verifyPostAuthority(post);
 
-        editField(modPost::getCategory, post::setCategory);
-        editField(modPost::getTitle, post::setTitle);
-        editField(modPost::getContent, post::setContent);
+//        TODO : Entity Setter 삭제 후 변경 로직 메서드 엔티티 내부로 이동시키기
+//        editField(modPost::getCategory, post::setCategory);
+//        editField(modPost::getTitle, post::setTitle);
+//        editField(modPost::getContent, post::setContent);
 
         return postRepository.save(post);
     }
@@ -125,24 +126,22 @@ public class PostServiceImpl implements PostService {
      *  현재 유저가 북마크한 POST인지 확인
      */
     private boolean checkUsersBookmarkedPost(Post post, User user) {
-        boolean bookmarked = false;
         Optional<Bookmark> bookmark = bookmarkRepository.findByUserAndPost(user, post);
         if(bookmark.isPresent()){
-            bookmarked = true;
+            return true;
         }
-        return bookmarked;
+        return false;
     }
 
     /**
      *  현재 유저가 좋아요 누른 POST인지 확인
      */
     private boolean checkUsersPostLike(Post post, User user) {
-        boolean liked = false;
         Optional<PostLike> postLike = postLikeRepository.findByUserAndPost(user, post);
         if(postLike.isPresent()){
-            liked = true;
+            return true;
         }
-        return liked;
+        return false;
     }
 
     /**
