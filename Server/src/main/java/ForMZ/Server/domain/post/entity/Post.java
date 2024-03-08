@@ -16,12 +16,8 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 public class Post extends BaseEntity {
 
@@ -34,11 +30,13 @@ public class Post extends BaseEntity {
     private String title;
 
     @Column
-    @Embedded
-    private Content content;
+    private int view = 0;
 
     @Column
-    private int view = 0;
+    private String text;
+
+    @Column
+    private String imageUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", nullable = false)
@@ -59,7 +57,7 @@ public class Post extends BaseEntity {
     /**
      *  조회수 증가
      */
-    public void beWatched(){
+    public void viewPlus(){
         this.view++;
     }
 }

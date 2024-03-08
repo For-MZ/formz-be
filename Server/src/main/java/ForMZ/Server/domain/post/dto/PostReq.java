@@ -1,8 +1,7 @@
 package ForMZ.Server.domain.post.dto;
 
 import ForMZ.Server.domain.category.entity.CategoryCode;
-import ForMZ.Server.domain.post.entity.Content;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,10 +11,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PostReq {
 
-    @NotNull
+    @NotBlank
     private CategoryCode category;
-    @NotNull
+    @NotBlank
     private String title;
-    @NotNull
-    private Content content;
+
+    private String text;
+
+    private String imageUrl;
 }
