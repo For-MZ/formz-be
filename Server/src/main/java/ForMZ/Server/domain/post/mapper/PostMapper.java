@@ -15,7 +15,6 @@ public interface PostMapper {
     Post postReqToPost(PostReq postReq);
 
     @Mapping(source = "post.id", target = "postId")
-    @Mapping(source = "post.content", target = "content")
     @Mapping(source = "post.user.nickName", target = "writer")
     @Mapping(source = "post.category.categoryCode", target = "category")
     @Mapping(source = "bookmarked", target = "bookmarked")
