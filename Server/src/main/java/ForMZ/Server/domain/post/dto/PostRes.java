@@ -1,6 +1,7 @@
 package ForMZ.Server.domain.post.dto;
 
 import ForMZ.Server.domain.category.entity.Category;
+import ForMZ.Server.domain.category.entity.CategoryCode;
 import ForMZ.Server.domain.comment.dto.AllCommentRes;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +19,6 @@ public class PostRes {
     private String writer;
     private String text;
     private String imageUrl;
-    private Category category;
     private boolean bookmarked;
     private boolean liked;
     private int likeCnt;

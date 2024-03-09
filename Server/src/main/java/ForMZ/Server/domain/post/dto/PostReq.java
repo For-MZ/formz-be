@@ -12,8 +12,6 @@ import lombok.NoArgsConstructor;
 public class PostReq {
 
     @NotBlank
-    private CategoryCode category;
-    @NotBlank
     private String title;
 
     private String text;
