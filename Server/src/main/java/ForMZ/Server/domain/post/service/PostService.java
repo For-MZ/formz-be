@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 public interface PostService {
-    Post createPost(Post post);
+    void createPost(Post post);
     Post getPost(Long postId);
     Post updatePost(Post post, Long postId);
     void deletePost(Long postId);

@@ -32,9 +32,8 @@ public class PostController {
      */
     @PostMapping("/posts")
     public ResponseEntity createPost(@RequestBody PostReq postReq){
-        Post post = postService.createPost(mapper.postReqToPost(postReq));
-        PostRes res = postService.convertPostRes(post);
-        return ResponseEntity.status(HttpStatus.CREATED).body(ResponseDto.create(HttpStatus.CREATED.value(), CREATE_POST_SUCCESS.getMessage(), res));
+        postService.createPost(mapper.postReqToPost(postReq));
+        return ResponseEntity.status(HttpStatus.CREATED).body(ResponseDto.create(HttpStatus.CREATED.value(), CREATE_POST_SUCCESS.getMessage()));
     }
 
     /**
