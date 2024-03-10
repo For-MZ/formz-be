@@ -10,8 +10,10 @@ import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -42,6 +44,8 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private SignType signType;
 
+
+
     @OneToMany(mappedBy = "user", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<Comment> comments = new ArrayList<>();
 
@@ -57,9 +61,20 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<PostLike> postLikes = new ArrayList<>();
 
-    public enum Role{
+    public User(String subject, String s, Collection<? extends GrantedAuthority> authorities) {
+        this.email = subject;
+        this.password = s;
+        //this.role = authorities;
+    }
+
+    public enum Role implements GrantedAuthority {
         USER,
-        ADMIN
+        ADMIN;
+
+        @Override
+        public String getAuthority() {
+            return null;
+        }
     }
 
     public enum SignType{
@@ -67,4 +82,9 @@ public class User extends BaseEntity {
         GOOGLE,
         KAKAO
     }
+
+    public Role getRole(){
+        return this.role;
+    }
+
 }
