@@ -24,7 +24,7 @@ public class CommentController {
      * 댓글 작성
      */
     @PostMapping("/comments")
-    public ResponseEntity<ResponseDto<?>> createComment(@RequestBody CommentReq commentReq) {
+    public ResponseEntity<ResponseDto<?>> createComment(@RequestBody @Valid CommentReq commentReq) {
         commentService.createComment(commentReq);
         return ResponseEntity.ok(ResponseDto.create(CREATED.value(), CREATE_SUCCESS.getMessage()));
     }
