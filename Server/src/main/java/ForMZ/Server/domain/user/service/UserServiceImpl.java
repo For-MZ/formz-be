@@ -15,16 +15,28 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService{
+
     private final UserRepository userRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
 
+    /**
+     * UserId를 통한 유저 조회
+     */
     @Override
     public User getUser(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new);
         return user;
+    }
+
+    /**
+     * 현재 접속 중인 유저 정보 가져오기
+     */
+    public User getCurrentUser() {
+        Long userId = 0L;   // TODO : 현재 유저 ID 가져오기
+        return getUser(userId);
     }
 
     @Override

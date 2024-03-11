@@ -6,5 +6,6 @@ import ForMZ.Server.global.auth.jwt.dto.LoginReq;
 
 public interface UserService {
     User getUser(Long userId);
+    User getCurrentUser();
     JwtToken Login(LoginReq loginReq);
 }
