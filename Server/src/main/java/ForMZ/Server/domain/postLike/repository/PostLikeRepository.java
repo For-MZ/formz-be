@@ -1,6 +1,5 @@
 package ForMZ.Server.domain.postLike.repository;
 
-import ForMZ.Server.domain.bookmark.entity.Bookmark;
 import ForMZ.Server.domain.post.entity.Post;
 import ForMZ.Server.domain.postLike.entity.PostLike;
 import ForMZ.Server.domain.user.entity.User;
