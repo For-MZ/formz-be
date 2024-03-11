@@ -88,9 +88,7 @@ public class User extends BaseEntity implements UserDetails {
         if(nickName != null){
             this.nickName = nickName;
         }
-        if(profileImage != null){
-            this.profileImage.updateFileUrl(profileImage);
-        }
+        this.profileImage.updateFileUrl(profileImage);
     }
 
     public void updateRefreshToken(String refreshToken){
