@@ -1,19 +1,17 @@
 package ForMZ.Server.domain.post.controller;
 
 
+import ForMZ.Server.domain.post.dto.AllPostRes;
 import ForMZ.Server.domain.post.dto.PostReq;
 import ForMZ.Server.domain.post.dto.PostRes;
+import ForMZ.Server.domain.post.dto.PostUpdateReq;
 import ForMZ.Server.domain.post.entity.Post;
-import ForMZ.Server.domain.post.mapper.PostMapper;
 import ForMZ.Server.domain.post.service.PostService;
 import ForMZ.Server.global.common.ResponseDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 import static ForMZ.Server.domain.post.constant.PostConstant.PostResponseMessage.*;
 
@@ -23,8 +21,6 @@ import static ForMZ.Server.domain.post.constant.PostConstant.PostResponseMessage
 @RequiredArgsConstructor
 public class PostController {
 
-    // Mapper 사용은 Service Layer 에서만으로 통일 고려
-    private final PostMapper mapper;
     private final PostService postService;
 
     /**
@@ -32,19 +28,21 @@ public class PostController {
      */
     @PostMapping("/posts")
     public ResponseEntity createPost(@RequestBody PostReq postReq){
-        postService.createPost(mapper.postReqToPost(postReq));
-        return ResponseEntity.status(HttpStatus.CREATED).body(ResponseDto.create(HttpStatus.CREATED.value(), CREATE_POST_SUCCESS.getMessage()));
+        postService.createPost(postReq);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ResponseDto.create(HttpStatus.CREATED.value(), CREATE_POST_SUCCESS.getMessage()));
     }
 
     /**
      *  게시글 수정
      */
     @PatchMapping("/posts/{postId}")
-    public ResponseEntity updatePost(@RequestBody PostReq postReq,
+    public ResponseEntity updatePost(@RequestBody PostUpdateReq postUpdateReq,
                                      @PathVariable("postId") Long postId){
-        Post post = postService.updatePost(mapper.postReqToPost(postReq), postId);
+        Post post = postService.updatePost(postUpdateReq, postId);
         PostRes res = postService.convertPostRes(post);
-        return ResponseEntity.status(HttpStatus.OK).body(ResponseDto.create(HttpStatus.OK.value(), UPDATE_POST_SUCCESS.getMessage(), res));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(ResponseDto.create(HttpStatus.OK.value(), UPDATE_POST_SUCCESS.getMessage(), res));
     }
 
     /**
@@ -53,7 +51,8 @@ public class PostController {
     @DeleteMapping("/posts/{postId}")
     public ResponseEntity deletePost(@PathVariable("postId") Long postId){
         postService.deletePost(postId);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(ResponseDto.create(HttpStatus.NO_CONTENT.value(), DELETE_POST_SUCCESS.getMessage()));
+        return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                .body(ResponseDto.create(HttpStatus.NO_CONTENT.value(), DELETE_POST_SUCCESS.getMessage()));
     }
 
     /**
@@ -62,11 +61,11 @@ public class PostController {
     @GetMapping("/posts")
     public ResponseEntity getPostList(@RequestParam(name = "page", defaultValue = "1", required = false) int page,
                                       @RequestParam(name = "pageSize", defaultValue = "10", required = false) int size,
-                                      @RequestParam(name = "category", required = false) String category,
-                                        @RequestParam(name = "sortParam", defaultValue = "createdDate", required = false) String sortParam){
-        Page<Post> postList = postService.getPosts(sortParam, category, page-1, size);
-        List<PostRes> postResList = mapper.postListToPostResList(postList.getContent());
-        return ResponseEntity.status(HttpStatus.OK).body(ResponseDto.create(HttpStatus.OK.value(), GET_POSTS_SUCCESS.getMessage(), postResList));
+                                      @RequestParam(name = "category", required = false) String categoryCode,
+                                      @RequestParam(name = "sort", defaultValue = "createdDate", required = false) String sort){
+        AllPostRes postResList = postService.getPosts(sort, categoryCode, page-1, size);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(ResponseDto.create(HttpStatus.OK.value(), GET_POSTS_SUCCESS.getMessage(), postResList));
     }
 
     /**
@@ -75,7 +74,9 @@ public class PostController {
     @GetMapping("/posts/{postId}")
     public ResponseEntity getPost(@PathVariable("postId") Long postId){
         Post post = postService.getPost(postId);
+        postService.viewPlus(post);
         PostRes res = postService.convertPostRes(post);
-        return ResponseEntity.status(HttpStatus.OK).body(ResponseDto.create(HttpStatus.OK.value(), GET_POST_SUCCESS.getMessage(), res));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(ResponseDto.create(HttpStatus.OK.value(), GET_POST_SUCCESS.getMessage(), res));
     }
 }
