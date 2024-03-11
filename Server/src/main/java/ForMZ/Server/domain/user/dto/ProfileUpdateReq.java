@@ -1,18 +1,20 @@
 package ForMZ.Server.domain.user.dto;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
 public class ProfileUpdateReq {
-    @Email  // TODO: 추후 정규표현식으로 변경
+    // TODO: 추후 email, nickName, password 정규표현식으로 변경
+
+    @Email
     private String email;
-    @Valid
+    @NotNull
     private String nickName;
-    @Valid
+    @NotNull
     private String password;
 
     private String profileImage;
