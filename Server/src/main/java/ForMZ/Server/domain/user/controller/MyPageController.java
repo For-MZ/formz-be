@@ -27,7 +27,8 @@ public class MyPageController {
     @GetMapping("/profiles")
     public ResponseEntity getProfile(){
         ProfileRes res = profileService.getProfile();
-        return ResponseEntity.status(HttpStatus.OK).body(ResponseDto.create(HttpStatus.OK.value(), GET_PROFILE_SUCCESS.getMessage(), res));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(ResponseDto.create(HttpStatus.OK.value(), GET_PROFILE_SUCCESS.getMessage(), res));
     }
 
     /**
@@ -36,7 +37,8 @@ public class MyPageController {
     @PatchMapping("/profiles")
     public ResponseEntity updateProfile(@RequestBody ProfileUpdateReq profileUpdateReq){
         ProfileRes res = profileService.updateProfile(profileUpdateReq);
-        return ResponseEntity.status(HttpStatus.OK).body(ResponseDto.create(HttpStatus.OK.value(), UPDATE_PROFILE_SUCCESS.getMessage(), res));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(ResponseDto.create(HttpStatus.OK.value(), UPDATE_PROFILE_SUCCESS.getMessage(), res));
     }
 
     /**
@@ -45,7 +47,8 @@ public class MyPageController {
     @GetMapping("/posts")
     public ResponseEntity getPostsWrittenByUser(){
         AllPostRes resList = profileService.getPostsWrittenByUser();
-        return ResponseEntity.status(HttpStatus.OK).body(ResponseDto.create(HttpStatus.OK.value(), GET_POSTS_WRITTEN_BY_USER_SUCCESS.getMessage(), resList));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(ResponseDto.create(HttpStatus.OK.value(), GET_POSTS_WRITTEN_BY_USER_SUCCESS.getMessage(), resList));
     }
 
     /**
@@ -54,7 +57,8 @@ public class MyPageController {
     @GetMapping("/comments")
     public ResponseEntity getCommentsWrittenByUser(){
         AllCommentRes resList = profileService.getCommentsWrittenByUser();
-        return ResponseEntity.status(HttpStatus.OK).body(ResponseDto.create(HttpStatus.OK.value(), GET_COMMENTS_WRITTEN_BY_USER_SUCCESS.getMessage(), resList));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(ResponseDto.create(HttpStatus.OK.value(), GET_COMMENTS_WRITTEN_BY_USER_SUCCESS.getMessage(), resList));
     }
 
     /**
@@ -63,6 +67,7 @@ public class MyPageController {
     @GetMapping("/bookmark/posts")
     public ResponseEntity getPostBookmarked(){
         AllPostRes resList = profileService.getPostsBookmarked();
-        return ResponseEntity.status(HttpStatus.OK).body(ResponseDto.create(HttpStatus.OK.value(), GET_POSTS_BOOKMARKED_SUCCESS.getMessage(), resList));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(ResponseDto.create(HttpStatus.OK.value(), GET_POSTS_BOOKMARKED_SUCCESS.getMessage(), resList));
     }
 }
