@@ -44,6 +44,7 @@ public class CommentServiceImpl implements CommentService{
 
         final String content = commentReq.getComment();
         Comment newComment = new Comment(content, user, post);
+        commentRepository.save(newComment);
         newComment.changeState(ACT);
     }
 
@@ -63,7 +64,7 @@ public class CommentServiceImpl implements CommentService{
                     }
                     int cmtLikeCnt = comment.getCommentLikes().size();
                     //대댓글 리스트
-                    List<ChildCommentRes> childCmts = getFiveChildComments(comment);
+                    List<ChildCommentRes> childCmts = getFiveChildComments(comment.getId());
                     return CommentMapper.INSTANCE.toCommentRes(cmtLiked, cmtLikeCnt, childCmts, comment);
                 }).toList();
 
@@ -73,9 +74,9 @@ public class CommentServiceImpl implements CommentService{
     /**
      * 대댓글 상위 5개 가져오기
      */
-    private List<ChildCommentRes> getFiveChildComments(Comment parentCmt) {
-        PageRequest pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC));
-        List<Comment> childComments = commentRepository.findAll(pageable).getContent();
+    private List<ChildCommentRes> getFiveChildComments(Long parentCmtId) {
+        PageRequest pageable = PageRequest.of(0, 5);
+        List<Comment> childComments = commentRepository.findChildCmtTop5ByCreatedDateDesc(parentCmtId, pageable);
         List<ChildCommentRes> childCmts = childComments.stream()
                 .map(c -> {
                     boolean cmtLiked = false;
