@@ -68,10 +68,29 @@ public class User extends BaseEntity implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<PostLike> postLikes = new ArrayList<>();
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "profileImageId", referencedColumnName = "file_id")
+    private File profileImage;
+
     public enum SignType{
         NORMAL,
         GOOGLE,
         KAKAO
+    }
+
+    public void updateProfile(String email, String password, String nickName, String profileImage){
+        if(email != null){
+            this.email = email;
+        }
+        if(password != null){
+            this.password = password;
+        }
+        if(nickName != null){
+            this.nickName = nickName;
+        }
+        if(profileImage != null){
+            this.profileImage.updateFileUrl(profileImage);
+        }
     }
 
     public void updateRefreshToken(String refreshToken){
