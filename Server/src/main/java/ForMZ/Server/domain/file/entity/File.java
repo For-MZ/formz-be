@@ -22,4 +22,8 @@ public class File extends BaseEntity {
     private String fileKey;  // s3 파일 저장시 발급되는 고유 키
     @Column
     private String fileSize;
+
+    public void updateFileUrl(String fileUrl){
+        this.fileUrl = fileUrl;
+    }
 }
