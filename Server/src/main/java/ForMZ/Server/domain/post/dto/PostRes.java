@@ -17,12 +17,13 @@ public class PostRes {
     private Long postId;
     private String title;
     private String writer;
+    private String categoryCode;
     private String text;
     private String imageUrl;
     private boolean bookmarked;
     private boolean liked;
     private int likeCnt;
-    private int viewCnt;
+    private int views;
     private int commentCnt;
     private AllCommentRes comments;
 }
