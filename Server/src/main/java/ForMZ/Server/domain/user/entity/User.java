@@ -8,7 +8,6 @@ import ForMZ.Server.domain.post.entity.Post;
 import ForMZ.Server.domain.postLike.entity.PostLike;
 import ForMZ.Server.global.entity.BaseEntity;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -35,7 +34,6 @@ public class User extends BaseEntity implements UserDetails {
     @Column(nullable = false)
     private String email;
 
-    @Valid
     @Column(nullable = false)
     private String password;
 
@@ -78,15 +76,15 @@ public class User extends BaseEntity implements UserDetails {
         KAKAO
     }
 
+    public void updateRefreshToken(String refreshToken){
+        this.refreshToken = refreshToken;
+    }
+
     public void updateProfile(String email, String password, String nickName, String profileImage){
         this.email = email;
         this.password = password;
         this.nickName = nickName;
         this.profileImage.updateFileUrl(profileImage);
-    }
-
-    public void updateRefreshToken(String refreshToken){
-        this.refreshToken = refreshToken;
     }
 
     /**
