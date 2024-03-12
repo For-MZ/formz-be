@@ -2,6 +2,7 @@ package ForMZ.Server.domain.comment.service;
 
 import ForMZ.Server.domain.comment.dto.*;
 import ForMZ.Server.domain.comment.entity.Comment;
+import ForMZ.Server.domain.comment.exception.CommentNotFoundException;
 import ForMZ.Server.domain.comment.repository.CommentRepository;
 import ForMZ.Server.domain.commentLike.repository.CommentLikeRepository;
 import ForMZ.Server.domain.post.entity.Post;
@@ -101,6 +102,17 @@ public class CommentServiceImplTest {
     }
 
     @Test
+    @DisplayName("댓글 수정 - 예외 반환")
+    void updateCommentEX() {
+        //given
+        CommentUpdateReq updateReq = new CommentUpdateReq();
+
+        given(commentRepository.findById(anyLong())).willReturn(Optional.empty());
+        //expected
+        assertThrows(CommentNotFoundException.class, () -> commentService.updateComment(1L, updateReq));
+    }
+
+    @Test
     @DisplayName("댓글 삭제")
     void deleteComment() {
         //given
@@ -114,5 +126,14 @@ public class CommentServiceImplTest {
 
         //then
         assertEquals(BaseEntity.ObjectState.DEL, comment.getObjectState());
+    }
+
+    @Test
+    @DisplayName("댓글 삭제 - 예외 반환")
+    void deleteCommentEX() {
+        //given
+        given(commentRepository.findById(anyLong())).willReturn(Optional.empty());
+        //expected
+        assertThrows(CommentNotFoundException.class, () -> commentService.deleteComment(1L));
     }
 }
