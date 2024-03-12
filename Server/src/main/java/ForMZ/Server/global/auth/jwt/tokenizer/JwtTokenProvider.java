@@ -1,48 +1,51 @@
 package ForMZ.Server.global.auth.jwt.tokenizer;
 
-import ForMZ.Server.domain.user.entity.User;
+import ForMZ.Server.domain.user.repository.UserRepository;
 import ForMZ.Server.global.auth.jwt.dto.JwtToken;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import jakarta.annotation.PostConstruct;
-import jakarta.transaction.Transactional;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Value;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.mapstruct.Qualifier;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
-import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Arrays;
-import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 
-@NoArgsConstructor
+
 @Slf4j
-@Configuration
+@Component
 public class JwtTokenProvider {
 
-    private Key key;
+    private final Key key;
+    private final UserRepository userRepository;
+
     private static final String SECRET_KEY = "123456789";
     private static final long EXPIRATION_TIME = 864_000_000; // 10 days
 
+    @Getter
+    @Value("${jwt.access-token-expiration-time}")
+    private int accessTokenExpirationTime;
+
+    @Getter
+    @Value("${jwt.refresh-token-expiration-time}")
+    private int refreshTokenExpirationTime;
+
     // application.yml에서 secret 값 가져와서 key에 저장
-    public JwtTokenProvider(String secretKey) {
+    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey, @Autowired UserRepository userRepository) {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
+        this.userRepository = userRepository;
     }
 
     public JwtToken generateToken(Authentication authentication) {
@@ -54,7 +57,7 @@ public class JwtTokenProvider {
         long now = (new Date()).getTime();
 
         // Access Token 생성
-        Date accessTokenExpiresIn = new Date(now + 86400000);
+        Date accessTokenExpiresIn = new Date(now + accessTokenExpirationTime);
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim("auth", authorities)
@@ -64,9 +67,13 @@ public class JwtTokenProvider {
 
         // Refresh Token 생성
         String refreshToken = Jwts.builder()
-                .setExpiration(new Date(now + 86400000))
+                .setExpiration(new Date(now + refreshTokenExpirationTime))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
+
+        // 회원 정보를 찾아서 리프레시 토큰을 저장 -> 추후에 redis 사용하여 refreshToken 저장할 예정
+        ForMZ.Server.domain.user.entity.User user = userRepository.findByEmail(authentication.getName()).orElse(null);
+        user.updateRefreshToken(refreshToken);
 
         return JwtToken.builder()
                 .grantType("Bearer")
@@ -115,7 +122,6 @@ public class JwtTokenProvider {
         return false;
     }
 
-
     // accessToken
     private Claims parseClaims(String accessToken) {
         try {
@@ -128,6 +134,4 @@ public class JwtTokenProvider {
             return e.getClaims();
         }
     }
-
-
 }
