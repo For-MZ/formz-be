@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static ForMZ.Server.domain.user.Constant.ProfileConstant.MyPageResponseMessage.*;
+import static ForMZ.Server.domain.user.constant.ProfileConstant.MyPageResponseMessage.*;
 
 @RestController
 @RequestMapping("/my-page")
