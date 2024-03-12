@@ -79,15 +79,9 @@ public class User extends BaseEntity implements UserDetails {
     }
 
     public void updateProfile(String email, String password, String nickName, String profileImage){
-        if(email != null){
-            this.email = email;
-        }
-        if(password != null){
-            this.password = password;
-        }
-        if(nickName != null){
-            this.nickName = nickName;
-        }
+        this.email = email;
+        this.password = password;
+        this.nickName = nickName;
         this.profileImage.updateFileUrl(profileImage);
     }
 
