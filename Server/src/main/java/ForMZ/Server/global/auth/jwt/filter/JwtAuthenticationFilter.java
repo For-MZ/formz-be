@@ -1,52 +1,49 @@
 package ForMZ.Server.global.auth.jwt.filter;
 
-import ForMZ.Server.domain.user.dto.request.LoginReq;
 import ForMZ.Server.global.auth.jwt.tokenizer.JwtTokenProvider;
-import com.fasterxml.jackson.core.exc.StreamReadException;
-import com.fasterxml.jackson.databind.DatabindException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.util.StringUtils;
+import org.springframework.web.filter.GenericFilterBean;
 
 import java.io.IOException;
 
 @Slf4j
 @RequiredArgsConstructor
-public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+public class JwtAuthenticationFilter extends GenericFilterBean {
+
+    private final JwtTokenProvider jwtTokenProvider;
+
     private static final String SECRET_KEY = "your-secret-key";
     private static final long EXPIRATION_TIME = 864_000_000; // 10 days
-    private JwtTokenProvider jwtTokenProvider;
-
-    public JwtAuthenticationFilter(JwtTokenProvider jwtTokenProvider) {
-        this.jwtTokenProvider = jwtTokenProvider;
-    }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException{
+        // Request Header에서 JWT 토큰 추출
+        String token = resolveToken((HttpServletRequest) request);
 
-        System.out.println("로그인 시도 : jwt autb filter");
-        ObjectMapper om = new ObjectMapper();
-        try{
-            LoginReq login = om.readValue(request.getInputStream(), LoginReq.class);
-            UsernamePasswordAuthenticationToken authenticationToken =
-                    new UsernamePasswordAuthenticationToken(login.getEmail(), login.getPassword());
-            System.out.println("2 : jwt autb filter");
-            System.out.println("3 : jwt autb filter");
-        } catch (IOException e) {
-            e.printStackTrace();
+        // validateToken으로 토큰 유효성 검사
+        if(token != null && jwtTokenProvider.validateToken(token)){
+            // 토큰이 유효할 경우 토큰에서 Authentication 객체를 가지고 와서 SecurityContext에 저장
+            Authentication authentication = jwtTokenProvider.getAuthentication(token);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
-
-        return null;
+        chain.doFilter(request, response);
     }
 
+    // Request Header에서 토큰 정보 부분 추출
+    private String resolveToken(HttpServletRequest request){
+        String bearerToken = request.getHeader("Authorization");
+        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")){
+            return bearerToken.substring(7);    // "Bearer" 잘라내기
+        }
+        return null;
+    }
 }
-
