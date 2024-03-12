@@ -1,4 +1,4 @@
-package ForMZ.Server.domain.user.Constant;
+package ForMZ.Server.domain.user.constant;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
