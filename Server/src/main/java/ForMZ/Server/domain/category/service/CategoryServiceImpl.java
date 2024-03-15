@@ -1,7 +1,7 @@
 package ForMZ.Server.domain.category.service;
 
 import ForMZ.Server.domain.category.entity.Category;
-import ForMZ.Server.domain.category.entity.CategoryCode;
+import ForMZ.Server.domain.category.entity.CategoryName;
 import ForMZ.Server.domain.category.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,9 +12,9 @@ public class CategoryServiceImpl implements CategoryService{
 
     private final CategoryRepository categoryRepository;
 
-    public Category getCategory(String categoryCode){
-        if(categoryCode.isBlank())
+    public Category getCategory(String categoryName){
+        if(categoryName.isBlank())
             return null;
-        return categoryRepository.findByCategoryCode(CategoryCode.parsing(categoryCode));
+        return categoryRepository.findByCategoryName(CategoryName.parsing(categoryName));
     }
 }
