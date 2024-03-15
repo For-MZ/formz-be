@@ -12,7 +12,7 @@ import java.util.List;
 public interface PostMapper {
     @Mapping(source = "post.id", target = "postId")
     @Mapping(source = "post.user.nickName", target = "writer")
-    PostRes postToPostRes(Post post, boolean bookmarked, boolean liked, int likeCnt, int commentCnt, String categoryCode);
+    PostRes postToPostRes(Post post, boolean bookmarked, boolean liked, int likeCnt, int commentCnt, String categoryName);
 
     List<PostRes> postListToAllPostRes(List<Post> posts);
 }

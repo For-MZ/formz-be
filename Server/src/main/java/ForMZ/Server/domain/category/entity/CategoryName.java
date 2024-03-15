@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 @Getter
 @RequiredArgsConstructor
-public enum CategoryCode {
+public enum CategoryName {
     POLICY("정책"),
     HOUSE("주택"),
     EMPLOYMENT("취업"),
@@ -19,7 +19,7 @@ public enum CategoryCode {
 
     private String categoryName;
 
-    CategoryCode(String categoryName){
+    CategoryName(String categoryName){
         this.categoryName = categoryName;
     }
 
@@ -27,8 +27,8 @@ public enum CategoryCode {
      * 대소문자 상관없이 해당 카테고리 코드가 존재하는지 확인
      */
     @JsonCreator
-    public static CategoryCode parsing(String inputValue) {
-        return Stream.of(CategoryCode.values())
+    public static CategoryName parsing(String inputValue) {
+        return Stream.of(CategoryName.values())
                 .filter(categoryCode -> categoryCode.toString().equals(inputValue.toUpperCase()))
                 .findFirst()
                 .orElseThrow(() -> new CategoryNotFoundException());

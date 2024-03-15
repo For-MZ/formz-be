@@ -1,7 +1,5 @@
 package ForMZ.Server.domain.post.dto;
 
-import ForMZ.Server.domain.category.entity.CategoryCode;
-import ForMZ.Server.domain.user.entity.User;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
