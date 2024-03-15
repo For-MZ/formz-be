@@ -116,23 +116,20 @@ public class PostServiceImpl implements PostService {
      *  모든 POST 조회
      */
     @Override
-    public AllPostRes getPosts(String sort, String categoryCode, int page, int size){
+    public AllPostRes getPosts(String sort, String categoryName, int page, int size){
         List<Post> postList = new ArrayList();
-        Category category = categoryService.getCategory(categoryCode);
+        Category category = categoryService.getCategory(categoryName);
 
         switch (sort){
             case "createdDate" :
+            case "views":
                 postList = postRepository.findAll(PageRequest.of(page, size,
-                       Sort.by("createdDate").descending())).getContent();
+                       Sort.by(sort).descending())).getContent();
                 break;
             case "likeCnt":
                 postList = postRepository.findAll(PageRequest.of(page, size)).getContent().stream()
                         .sorted(Comparator.comparing(Post::getPostLikesCount))
                         .collect(Collectors.toList());
-                break;
-            case "views":
-                postList = postRepository.findAll(PageRequest.of(page, size,
-                       Sort.by("views").descending())).getContent();
                 break;
             case "commentCnt":
                 postList = postRepository.findAll(PageRequest.of(page, size)).getContent().stream()
@@ -149,9 +146,7 @@ public class PostServiceImpl implements PostService {
             }
             return new AllPostRes(mapper.postListToAllPostRes(postList));
         }
-        else{
             throw new InvalidSortParamException();
-        }
     }
 
     /**
@@ -164,9 +159,9 @@ public class PostServiceImpl implements PostService {
         final boolean liked = checkUsersPostLike(post, user);
         final int likeCnt = post.getPostLikesCount();
         final int commentCnt = post.getCommentsCount();
-        final String categoryCode = post.getCategory().getCategoryCode().toString();
+        final String categoryName = post.getCategory().getCategoryName().toString();
 
-        return mapper.postToPostRes(post, bookmarked, liked, likeCnt, commentCnt, categoryCode);
+        return mapper.postToPostRes(post, bookmarked, liked, likeCnt, commentCnt, categoryName);
     }
 
     /**
