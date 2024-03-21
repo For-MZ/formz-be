@@ -2,7 +2,6 @@ package ForMZ.Server.domain.post.entity;
 
 import ForMZ.Server.domain.bookmark.entity.Bookmark;
 import ForMZ.Server.domain.category.entity.Category;
-import ForMZ.Server.domain.category.entity.CategoryCode;
 import ForMZ.Server.domain.comment.entity.Comment;
 import ForMZ.Server.domain.postLike.entity.PostLike;
 
@@ -11,7 +10,6 @@ import ForMZ.Server.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +28,7 @@ public class Post extends BaseEntity {
     private String title;
 
     @Column
-    private int view = 0;
+    private int views = 0;
 
     @Column
     private String text;
@@ -52,12 +50,49 @@ public class Post extends BaseEntity {
     private List<Bookmark> bookmarks = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CATEGORY_ID")
     private Category category;
 
-    /**
-     *  조회수 증가
-     */
+    public Post(User user, Category category, String title, String text, String imageUrl){
+        setUser(user);
+        this.category = category;
+        this.title = title;
+        this.text = text;
+        this.imageUrl = imageUrl;
+    }
+    private void setUser(User user){
+        this.user = user;
+        if(!user.getPosts().contains(this)){
+            user.getPosts().add(this);
+        }
+    }
+
+    //  조회 수 증가
     public void viewPlus(){
-        this.view++;
+        this.views++;
+    }
+
+    //  게시글 수정
+    public void updatePost(Category category, String title, String text, String imageUrl){
+        if(category != null){
+            this.category = category;
+        }
+        if(title != null){
+            this.title = title;
+        }
+        if(text != null){
+            this.text = text;
+        }
+        this.imageUrl = imageUrl;
+    }
+
+    //  게시글 좋아요 수 반환
+    public int getPostLikesCount(){
+        return this.postLikes.size();
+    }
+
+    //  게시글 댓글 수 반환
+    public int getCommentsCount(){
+        return this.comments.size();
     }
 }

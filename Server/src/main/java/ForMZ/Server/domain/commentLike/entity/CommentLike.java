@@ -4,11 +4,11 @@ import ForMZ.Server.domain.comment.entity.Comment;
 import ForMZ.Server.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@RequiredArgsConstructor
 public class CommentLike {
 
     @Id
@@ -18,9 +18,9 @@ public class CommentLike {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", nullable = false)
-    private User user;
+    private final User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "COMMENT_ID", nullable = false)
-    private Comment comment;
+    private final Comment comment;
 }

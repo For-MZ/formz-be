@@ -3,6 +3,7 @@ package ForMZ.Server.domain.user.entity;
 import ForMZ.Server.domain.bookmark.entity.Bookmark;
 import ForMZ.Server.domain.comment.entity.Comment;
 import ForMZ.Server.domain.commentLike.entity.CommentLike;
+import ForMZ.Server.domain.file.entity.File;
 import ForMZ.Server.domain.post.entity.Post;
 import ForMZ.Server.domain.postLike.entity.PostLike;
 import ForMZ.Server.global.entity.BaseEntity;
@@ -31,7 +32,8 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String password;
 
-    @Column
+    @Valid
+    @Column(nullable = false)
     private String nickName;
 
     @Enumerated(value = EnumType.STRING)
@@ -57,6 +59,10 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<PostLike> postLikes = new ArrayList<>();
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "profileImageId", referencedColumnName = "file_id")
+    private File profileImage;
+
     public enum Role{
         USER,
         ADMIN
@@ -66,5 +72,12 @@ public class User extends BaseEntity {
         NORMAL,
         GOOGLE,
         KAKAO
+    }
+
+    public void updateProfile(String email, String password, String nickName, String profileImage){
+        this.email = email;
+        this.password = password;
+        this.nickName = nickName;
+        this.profileImage.updateFileUrl(profileImage);
     }
 }

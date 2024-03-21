@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostReq {
+public class PostUpdateReq {
 
     private String category;
     @NotBlank
