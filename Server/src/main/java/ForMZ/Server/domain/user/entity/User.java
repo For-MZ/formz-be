@@ -80,4 +80,13 @@ public class User extends BaseEntity {
         this.nickName = nickName;
         this.profileImage.updateFileUrl(profileImage);
     }
+
+    //테스트 용 생성자
+    public User(String email, String password, String nickName, Role role, SignType signType) {
+        this.email = email;
+        this.password = password;
+        this.nickName = nickName;
+        this.role = role;
+        this.signType = signType;
+    }
 }
