@@ -80,7 +80,7 @@ public class PostController {
     /**
      * 검색을 통한 게시글 목록 조회
      */
-    @GetMapping("/posts/search/")
+    @GetMapping("/posts/search")
     public ResponseEntity getPostsBySearch(@RequestParam(name = "word") String word, @RequestParam(name = "page") int page) {
         AllPostsBySearch posts = postService.getPostsBySearch(word, page);
         return ResponseEntity.ok(ResponseDto.create(HttpStatus.OK.value(), GET_POST_BY_SEARCH_SUCCESS.getMessage(), posts));
